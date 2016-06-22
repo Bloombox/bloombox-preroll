@@ -3,33 +3,335 @@
 `<bloombox-preroll>` provides UI for creating and managing pre-rolled joint products.
 
 @group Bloombox Elements
-@element bloombox-testing
+@element bloombox-preroll
 @demo demo/index.html
 @homepage bloombox.github.io
 -->
 
 <link rel="import" href="../polymer/polymer.html">
 
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-label/iron-label.html">
+
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-input/paper-textarea.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-slider/paper-slider.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+
+<link rel="import" href="../bloombox-media/bloombox-media.html">
+<link rel="import" href="../bloombox-styles/bloombox-styles.html">
+<link rel="import" href="../bloombox-testing/bloombox-testing.html">
+<link rel="import" href="../bloombox-product/bloombox-product.html">
+<link rel="import" href="../bloombox-pricelist/bloombox-price.html">
+
+
 <dom-module id="bloombox-preroll">
   <template>
-    <style>
+    <style is="custom-style" include="bloombox-styles">
       :host {
         display: block;
       }
     </style>
-    <b>PREROLL</b>
+
+    <template is="dom-if" if="[[!zerostate]]">
+      <paper-card heading="[[_renderBrand()]][[name]]" class="product-card preroll-product data-content fullwidth">
+        <div class="card-content">
+          <!-- Description -->
+          <div class="row description-container">
+            <template is="dom-if" if="[[!_slim]]">
+              <template is="dom-if" if="[[description]]">
+                <div class="product-description">[[description]]</div>
+              </template>
+              <template is="dom-if" if="[[!description]]">
+                <div class="no-description">(No description)</div>
+              </template>
+            </template>
+          </div><!-- end div.row.description-container -->
+
+          <!-- Stock Flags -->
+          <div class="stock-flags preroll-info test-info row">
+            <!-- MPMH -->
+            <iron-label class="premium-label" hidden$="[[!premium]]"><span>[[_renderPremiumLabel(partner)]]</span></iron-label>
+
+            <!-- Sale -->
+            <iron-label class="sale-label" hidden$="[[!sale]]"><span>[[sale]]% OFF</span></iron-label>
+
+            <!-- Buy-One-Get-One -->
+            <iron-label class="bogo-label" hidden$="[[!bogo]]"><span>Buy One Get One</span></iron-label>
+
+            <!-- Species -->
+            <iron-label class="species-label" hidden$="[[!species]]"><span>[[species]]</span></iron-label>
+
+            <!-- Grow -->
+            <iron-label class="grow-label" hidden$="[[!grow]]"><span>[[grow]]</span></iron-label>
+
+            <!-- Test Results -->
+            <bloombox-testing
+              mode="basic"
+              thc="[[tests.thc]]"
+              cbd="[[tests.cbd]]"></bloombox-testing>
+          </div><!-- end div.row.stock-flags -->
+
+          <!-- Product Media -->
+          <div class="product-media preroll-media row">
+            <div class="bloombox-media-wrap">
+              <bloombox-media hidden$="[[_shouldHideImage()]]" disabled partner="[[partner]]" asset="[[_image]]"></bloombox-media>
+            </div><!-- end div.bloombox-media-wrap -->
+          </div><!-- end .row.preroll-media -->
+
+          <!-- Price List -->
+          <div class="row pricelist">
+            <bloombox-price
+              class="prerollSealedPrice"
+              price="[[pricing.unit.value]]"
+              available="[[pricing.unit.available]]"
+              currency="$"></bloombox-price>
+          </div><!-- end div.row.pricelist -->
+          <template is="dom-if" if="[[!visible]]">
+            <div class="not-in-stock-overlay not-in-stock"></div><!-- end div.not-in-stock-overlay -->
+          </template>
+        </div><!-- end div.card-content -->
+        <div class="card-actions">
+          <paper-button on-tap="edit"><iron-icon icon="create"></iron-icon>Edit</paper-button>
+          <paper-button on-tap="delete"><iron-icon icon="delete"></iron-icon>Delete</paper-button>
+        </div>
+      </paper-card><!-- end paper-card.product-card.data-content.preroll-product -->
+    </template>
+
+    <template is="dom-if" if="[[zerostate]]">
+      <paper-card header="Pre-Roll" class="product-card preroll-product zerostate fullwidth">
+        <div class="card-content">
+          <div class="basic-info row">
+            <!-- Name & Description -->
+            <paper-input id="brandField" placeholder="Brand Name" value="{{brand}}" required no-label-float name="brand" class="form-item preroll-brand"></paper-input>
+            <paper-input id="nameField" placeholder="Product Name" value="{{name}}" required no-label-float name="name" class="form-item preroll-name"></paper-input>
+            <paper-textarea id="descriptionField" label="Description" value="{{description}}" no-label-float name="description" class="form-item preroll-description"></paper-textarea>
+            <paper-dropdown-menu id="speciesField" label="Species" class="form-item" noink no-label-float required name="species">
+              <paper-listbox class="dropdown-content" selected="{{species}}">
+                <paper-item>Indica</paper-item>
+                <paper-item>Hybrid (Indica Dominant)</paper-item>
+                <paper-item>Hybrid (No Dominance)</paper-item>
+                <paper-item>Sativa</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu><!-- end paper-dropdown-menu#speciesField -->
+            <paper-dropdown-menu id="growField" label="Grow" class="form-item" noink no-label-float required name="grow">
+              <paper-listbox class="dropdown-content" selected="{{grow}}">
+                <paper-item>Indoor</paper-item>
+                <paper-item>Outdoor</paper-item>
+                <paper-item>Greenhouse</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu><!-- end paper-dropdown-menu#growField -->
+          </div><!-- end .row.basic-info -->
+
+          <!-- Pricing/Sale Flags -->
+          <div class="stock-flags row">
+            <div class="row-label">
+              <span class="row-label-value">Inventory</span>
+            </div><!-- end div.row-label -->
+
+            <div class="in-stock-toggle-option">
+              <paper-checkbox id="showToggle" checked="{{visible}}" class="form-item show-item-toggle" noink>In Stock</paper-checkbox>
+            </div><!-- end .in-stock-toggle-option -->
+
+            <div class="premium-toggle-option">
+              <paper-checkbox id="premiumToggle" checked="{{premium}}" class="form-item premium-toggle" noink>[[_renderPremiumLabel(partner)]]</paper-checkbox>
+            </div><!-- end .premium-toggle-option -->
+
+            <div class="sale-toggle-option">
+              <div class="sale-toggle-container">
+                <paper-checkbox id="saleToggle" checked="[[_isOnSale()]]" on-tap="_toggleSale" class="form-item sale-toggle" noink>On Sale</paper-checkbox>
+              </div><!-- end .sale-toggle-container -->
+              <template is="dom-if" if="{{sale}}">
+                <div class="sale-amount-container">
+                  <paper-slider id="saleValue" pin value="{{sale}}" max="95" min="5" editable step="5" class="form-item"></paper-slider>
+                </div><!-- end .sale-amount-container -->
+                <div class="sale-percentage-label">% off</div>
+              </template>
+            </div><!-- end .sale-toggle-option -->
+
+            <div class="bogo-toggle-option">
+              <paper-checkbox id="bogoToggle" checked="{{bogo}}" class="form-item item-bogo-toggle" noink>Buy One, Get One</paper-checkbox>
+            </div><!-- end .bogo-toggle-option -->
+          </div><!-- end .row.stock-flags -->
+
+          <!-- Test Results -->
+          <div class="test-results row">
+            <div class="row-label">
+              <span class="row-label-value">Testing</span>
+            </div><!-- end div.row-label -->
+
+            <paper-checkbox id="testsToggle" checked="[[_hasKnownTestResults()]]" on-tap="_toggleTests" class="form-item tests-toggle" noink>Test Results</paper-checkbox>
+            <div class="test-results-container">
+              <template is="dom-if" if="{{tests}}">
+                <bloombox-testing
+                  id="productTesting"
+                  zerostate
+                  mode="basic"
+                  thc="{{tests.thc}}"
+                  cbd="{{tests.cbd}}"></bloombox-testing>
+              </template>
+            </div><!-- end .test-results-container -->
+          </div><!-- end .row.test-results -->
+
+          <!-- Price List -->
+          <div class="row pricelist">
+            <bloombox-price
+              id="editablePrice"
+              editable
+              price="{{pricing.unit.value}}"
+              available="{{pricing.unit.available}}"
+              currency="$"></bloombox-price>
+          </div><!-- end div.row.pricelist -->
+        </div><!-- end div.card-content -->
+
+        <!-- Actions -->
+        <template is="dom-if" if="[[editing]]">
+          <div class="preroll-zerostate-actions card-actions row">
+            <paper-button id="saveButton" raised on-tap="commitEdits"><iron-icon icon="save"></iron-icon>Save</paper-button>
+            <paper-button id="cancelButton" on-tap="cancelEdits"><iron-icon icon="cancel"></iron-icon>Cancel</paper-button>
+          </div><!-- end .preroll-zerostate-actions.card-actions -->
+        </template>
+        <template is="dom-if" if="[[!editing]]">
+          <div class="preroll-zerostate-actions edit-actions card-actions row">
+            <paper-button id="submitButton" raised on-tap="persist"><iron-icon icon="check-circle"></iron-icon>Create</paper-button>
+            <paper-button id="discardButton" on-tap="_triggerDiscard"><iron-icon icon="cancel"></iron-icon>Discard</paper-button>
+          </div><!-- end .preroll-zerostate-actions.card-actions.edit-actions -->
+        </template>        
+      </paper-card><!-- end paper-card.product-card.zerostate.preroll-product -->
+    </template>
   </template>
 
   <script>
     Polymer({
 
       is: 'bloombox-preroll',
+      schema: 'prerolls',
+      behaviors: [Polymer.BloomboxUnitPricingProductCardBehavior],
 
       properties: {
-        prop1: {
+        /**
+         * Linked strain, if known, and if it is present in the current dataset.
+         * Referenced via a database key (as a `String`).
+         */
+        strain: {
           type: String,
-          value: 'bloombox-preroll',
+          notify: true
         }
+      },
+
+      /**
+       * Read underlying object data, suitable for writing into underlying persistence
+       * or comparing with edits.
+       */
+      readObjectData: function() {
+        var payload = {};
+
+        // handle required fields
+        payload.name = this.get("name");
+        payload.brand = this.get("brand");
+        payload.species = this.get("species");
+        payload.grow = this.get("grow");
+        payload.strain = this.get("strain");
+        payload.photos = this.get("photos") || [];
+        payload.pricing = this.get("pricing");
+
+        // handle test results
+        if (this.get("tests") !== undefined && this.get("tests") != null) {
+          payload.tests = {
+            thc: this.get("tests").thc,
+            cbd: this.get("tests").cbd
+          };
+        }
+
+        // handle optional fields
+        if (this.get("premium") == true) {
+          payload.flags = payload.flags || {};
+          payload.flags.premium = true;
+        }
+        if (this.get("sale") !== undefined && this.get("sale") != null) {
+          payload.flags = payload.flags || {};
+          payload.flags.sale = this.get("sale");
+        }
+        if (this.get("visible") != null && this.get("visible") != undefined) {
+          payload.flags = payload.flags || {};
+          payload.flags.visible = this.get("visible");
+        }
+        if (this.get("bogo") != null && this.get("bogo") != undefined) {
+          payload.flags = payload.flags || {};
+          payload.flags.bogo = this.get("bogo");
+        }
+        if (this.get("description") !== undefined && this.get("description") !== null &&
+            this.get("description").length > 0) payload.description = this.get("description");
+        return payload;
+      },
+
+      /**
+       * Read underlying object data direct from the current zero-state form.
+       */
+      readZeroStateForm: function() {
+        var payload = {},
+            priceValue = this.$$("#editablePrice").value,
+            priceAvailable = this.$$("#editablePrice").available,
+            pricelist = {},
+            mi, mpayload, testing;
+
+        // handle required fields
+        payload.name = this.$$("#nameField").value;
+        payload.brand = this.$$("#brandField").value;
+        payload.species = this.$$("#speciesField").value;
+        payload.grow = this.$$("#growField").value;
+
+        // @TODO: strain linking support
+        // payload.strain = this.$$("#strainField").value;
+
+        if (this.get("photos") && this.get("photos").length > 0)
+          payload.photos = this.get("photos");
+
+        // handle test results
+        if (this.$$("#testsToggle").checked) {
+          testing = this.$$("#productTesting");
+          payload.tests = {
+            thc: testing.thc,
+            cbd: testing.cbd
+          };
+        }
+
+        payload.pricing = {
+          unit: {
+            available: priceAvailable,
+            value: priceValue
+          }
+        }
+
+        // handle optional fields
+        if (this.$$("#premiumToggle").checked) {
+          payload.flags = payload.flags || {};
+          payload.flags.premium = true;
+        }
+        if (this.$$("#showToggle").checked) {
+          payload.flags = payload.flags || {};
+          payload.flags.visible = true;
+        } else {
+          payload.flags = payload.flags || {};
+          payload.flags.visible = false;
+        }
+        if (this.$$("#bogoToggle").checked) {
+          payload.flags = payload.flags || {};
+          payload.flags.bogo = true;
+        }
+        if (this.$$("#saleToggle").checked) {
+          payload.flags = payload.flags || {};
+          payload.flags.sale = this.$$("#saleValue").value;
+        }
+        if (this.$$("#descriptionField").value !== undefined && this.$$("#descriptionField").value.length > 0)
+          payload.description = this.$$("#descriptionField").value;
+        return payload;
       }
     });
   </script>
