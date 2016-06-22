@@ -15,15 +15,61 @@
     </style>
   </head>
   <body>
-
     <div class="vertical-section-container centered">
-      <h3>Basic bloombox-preroll Demo</h3>
+      <h3>Zerostate Example</h3>
       <demo-snippet>
         <template>
-          <bloombox-preroll></bloombox-preroll>
+          <bloombox-preroll zerostate></bloombox-preroll>
         </template>
       </demo-snippet>
     </div>
 
+    <div class="vertical-section-container centered">
+      <h3>Data Example (normal display mode)</h3>
+      <demo-snippet>
+        <template>
+          <bloombox-preroll
+            key="sample1"
+            display-mode="normal"
+            brand="Abatin"
+            name="Premium House Cone"
+            species="Sativa"
+            grow="Indoor"
+            photos='["test.jpg"]'
+            description="This awesome pre-roll is made from our best and is fortified with hash and kief."
+            tests='{"cbd":60,"thc":15}'
+            pricing='{"unit": {"available": true, "value": 15}}'
+            sale="20"
+            bogo="true"
+            visible="true"
+            premium="true"
+            partner="mm"></bloombox-preroll>
+        </template>
+      </demo-snippet>
+    </div>
+
+    <div class="vertical-section-container centered">
+      <h3>Data Example (slim display mode)</h3>
+      <demo-snippet>
+        <template>
+          <bloombox-preroll
+            key="sample2"
+            display-mode="slim"
+            brand="Abatin"
+            name="Premium House Cone"
+            species="Sativa"
+            grow="Indoor"
+            photos='["test.jpg"]'
+            description="This awesome pre-roll is made from our best and is fortified with hash and kief."
+            tests='{"cbd":60,"thc":15}'
+            pricing='{"unit": {"available": true, "value": 15}}'
+            sale="20"
+            bogo="true"
+            visible="true"
+            premium="true"
+            partner="mm"></bloombox-preroll>
+        </template>
+      </demo-snippet>
+    </div>
   </body>
 </html>
