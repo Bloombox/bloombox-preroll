@@ -30,10 +30,12 @@
     "iron-icons": "PolymerElements/iron-icons#^1.1.3",
     "iron-icon": "PolymerElements/iron-icon#^1.0.8",
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^1.2.2",
+    "bloombox-product": "git@github.com:bloombox/bloombox-product.git#master",
     "bloombox-media": "git@github.com:bloombox/bloombox-media.git#master",
     "bloombox-styles": "git@github.com:bloombox/bloombox-styles.git#master",
     "bloombox-testing": "git@github.com:bloombox/bloombox-testing.git#master",
-    "bloombox-pricelist": "git@github.com:bloombox/bloombox-pricelist.git#master"
+    "bloombox-pricelist": "git@github.com:bloombox/bloombox-pricelist.git#master",
+    "paper-listbox": "PolymerElements/paper-listbox#^1.1.2"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
