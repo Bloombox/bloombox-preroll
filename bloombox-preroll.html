@@ -105,7 +105,7 @@
     </template>
 
     <template is="dom-if" if="[[zerostate]]">
-      <paper-card header="Pre-Roll" class="product-card preroll-product zerostate fullwidth">
+      <paper-card heading="Pre-Roll" class="product-card preroll-product zerostate fullwidth">
         <div class="card-content">
           <div class="basic-info row">
             <!-- Name & Description -->
@@ -208,11 +208,14 @@
   </template>
 
   <script>
-    Polymer({
-
+    Polymer.BloomboxPreroll = Polymer({
       is: 'bloombox-preroll',
-      schema: 'prerolls',
       behaviors: [Polymer.BloomboxUnitPricingProductCardBehavior],
+
+      /**
+       * Persistence schema and storage collection for this item.
+       */
+      _schema: 'apothecary',
 
       properties: {
         /**
