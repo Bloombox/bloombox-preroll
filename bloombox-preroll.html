@@ -66,10 +66,10 @@
             <iron-label class="bogo-label" hidden$="[[!bogo]]"><span>Buy One Get One</span></iron-label>
 
             <!-- Species -->
-            <iron-label class="species-label" hidden$="[[!species]]"><span>[[_speciesLabelOrNah(species)]]</span></iron-label>
+            <iron-label class="species-label" hidden$="[[!species]]"><span>[[species]]</span></iron-label>
 
             <!-- Grow -->
-            <iron-label class="grow-label" hidden$="[[!grow]]"><span>[[_growLabelOrNah(grow)]]</span></iron-label>
+            <iron-label class="grow-label" hidden$="[[!grow]]"><span>[[grow]]</span></iron-label>
 
             <!-- Test Results -->
             <bloombox-testing
@@ -243,25 +243,6 @@
           notify: true
         }
       },
-
-      /**
-       * Provides either a valid label for a `species` type or `Unknown Species`.
-       */
-      _speciesLabelOrNah: function(label) {
-        if (label !== undefined && label.length)
-          return label;
-        return "Unknown Species";
-      },
-
-      /**
-       * Provides either a valid label for a `grow` type or `Unknown Grow`.
-       */
-      _growLabelOrNah: function(label) {
-        if (label !== undefined && label.length)
-          return label;
-        return "Unknown Grow";
-      },
-
 
       /**
        * Read underlying object data, suitable for writing into underlying persistence
