@@ -33,7 +33,6 @@
         <template>
           <bloombox-preroll
             key="sample1"
-            partner="abatin"
             environment="sandbox"
             display-mode="normal"
             brand="Abatin"
@@ -54,12 +53,30 @@
     </div>
 
     <div class="vertical-section-container centered">
-      <h3>Data Example (slim display mode)</h3>
+      <h3>Data Example (crappy data)</h3>
       <demo-snippet>
         <template>
           <bloombox-preroll
             key="sample2"
-            partner="abatin"
+            environment="sandbox"
+            display-mode="normal"
+            brand="Abatin"
+            name="Premium House Cone"
+            photos='["test.jpg"]'
+            description="This awesome pre-roll is made from our best and is fortified with hash and kief."
+            pricing='{"unit": {"available": true, "value": 15}}'
+            visible="true"
+            partner="mm"></bloombox-preroll>
+        </template>
+      </demo-snippet>
+    </div>
+
+    <div class="vertical-section-container centered">
+      <h3>Data Example (slim display mode)</h3>
+      <demo-snippet>
+        <template>
+          <bloombox-preroll
+            key="sample3"
             environment="sandbox"
             display-mode="slim"
             brand="Abatin"
