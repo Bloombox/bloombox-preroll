@@ -81,7 +81,12 @@
           <!-- Product Media -->
           <div class="product-media preroll-media row">
             <div class="bloombox-media-wrap">
-              <bloombox-media hidden$="[[_shouldHideImage()]]" disabled partner="[[partner]]" asset="[[_image]]"></bloombox-media>
+              <bloombox-media
+                hidden$="[[_shouldHideImage()]]"
+                disabled
+                partner="[[partner]]"
+                environment="[[environment]]"
+                asset="[[_image]]"></bloombox-media>
             </div><!-- end div.bloombox-media-wrap -->
           </div><!-- end .row.preroll-media -->
 
@@ -178,6 +183,17 @@
               </template>
             </div><!-- end .test-results-container -->
           </div><!-- end .row.test-results -->
+
+          <!-- Product Media -->
+          <div class="preroll-media row">
+            <div class="bloombox-media-wrap">
+              <bloombox-media
+                partner="[[partner]]"
+                environment="[[environment]]"
+                asset="[[_image]]"
+                on-asset-ready="handleAssetAttach"></bloombox-media>
+            </div><!-- end div.bloombox-media-wrap -->
+          </div><!-- end .row.preroll-media -->
 
           <!-- Price List -->
           <div class="row pricelist">
