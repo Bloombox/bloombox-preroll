@@ -228,7 +228,7 @@
   <script>
     Polymer.BloomboxPreroll = Polymer({
       is: 'bloombox-preroll',
-      behaviors: [Polymer.BloomboxUnitPricingProductCardBehavior],
+      behaviors: [Polymer.BloomboxBaseProductCardBehavior, Polymer.BloomboxUnitPricingProductCardBehavior],
 
       /**
        * Persistence schema and storage collection for this item.
