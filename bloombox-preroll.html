@@ -66,10 +66,10 @@
             <iron-label class="bogo-label" hidden$="[[!bogo]]"><span>Buy One Get One</span></iron-label>
 
             <!-- Species -->
-            <iron-label class="species-label" hidden$="[[!species]]"><span>[[species]]</span></iron-label>
+            <iron-label class="species-label" hidden$="[[_shouldHideLabel(species)]]"><span>[[species]]</span></iron-label>
 
             <!-- Grow -->
-            <iron-label class="grow-label" hidden$="[[!grow]]"><span>[[grow]]</span></iron-label>
+            <iron-label class="grow-label" hidden$="[[_shouldHideLabel(grow)]]"><span>[[grow]]</span></iron-label>
 
             <!-- Test Results -->
             <bloombox-testing
@@ -244,6 +244,13 @@
           type: String,
           notify: true
         }
+      },
+
+      /**
+       * Calculates whether certain labels should be displayed or not.
+       */
+      _shouldHideLabel: function(value) {
+        return !(typeof value === "string" && value.length > 1);
       },
 
       /**
