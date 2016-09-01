@@ -76,31 +76,35 @@
           <div class="name-row">
             <h2>[[brand]]: [[name]]</h2>
 
-          <!-- Stock Flags -->
-          <div class="stock-flags preroll-info test-info row">
-            <div class="base-flags">
-              <!-- MPMH -->
-              <iron-label class="premium-label" hidden$="[[!premium]]"><span>[[_renderPremiumLabel(partner)]]</span></iron-label>
+            <!-- Stock Flags -->
+            <div class="stock-flags preroll-info test-info row">
+              <div class="base-flags">
+                <!-- MPMH -->
+                <iron-label class="premium-label" hidden$="[[!premium]]"><span>[[_renderPremiumLabel(partner)]]</span></iron-label>
 
-              <!-- Sale -->
-              <iron-label class="sale-label" hidden$="[[!sale]]"><span>[[sale]]% OFF</span></iron-label>
+                <!-- Sale -->
+                <iron-label class="sale-label" hidden$="[[!sale]]"><span>[[sale]]% OFF</span></iron-label>
 
-              <!-- Buy-One-Get-One -->
-              <iron-label class="bogo-label" hidden$="[[!bogo]]"><span>Buy One Get One</span></iron-label>
+                <!-- Buy-One-Get-One -->
+                <iron-label class="bogo-label" hidden$="[[!bogo]]"><span>Buy One Get One</span></iron-label>
 
-              <!-- Species -->
-              <iron-label class="species-label" hidden$="[[_shouldHideLabel(species)]]"><span>[[species]]</span></iron-label>
+                <!-- Species -->
+                <iron-label class="species-label" hidden$="[[_shouldHideLabel(species)]]"><span>[[species]]</span></iron-label>
 
-              <!-- Grow -->
-              <iron-label class="grow-label" hidden$="[[_shouldHideLabel(grow)]]"><span>[[grow]]</span></iron-label>
-            </div>
+                <!-- Grow -->
+                <iron-label class="grow-label" hidden$="[[_shouldHideLabel(grow)]]"><span>[[grow]]</span></iron-label>
+              </div>
 
-            <!-- Test Results -->
-            <bloombox-testing
-              mode="basic"
-              thc="[[tests.thc]]"
-              cbd="[[tests.cbd]]"></bloombox-testing>
-          </div><!-- end div.row.stock-flags -->
+              <!-- Test Results -->
+              <template is="dom-if" if="[[tests]]" restamp strip-whitespace>
+                <bloombox-testing
+                  mode="basic"
+                  rating-mode="%"
+                  thc="[[tests.thc]]"
+                  cbd="[[tests.cbd]]"></bloombox-testing>
+              </template>
+            </div><!-- end div.row.stock-flags -->
+          </div><!-- end div.name-row -->
 
           <!-- Description -->
           <div class="row description-container">
@@ -211,7 +215,7 @@
 
             <paper-checkbox id="testsToggle" checked="[[_hasKnownTestResults()]]" on-tap="_toggleTests" class="form-item tests-toggle" noink>Test Results</paper-checkbox>
             <div class="test-results-container">
-              <template is="dom-if" if="{{tests}}">
+              <template is="dom-if" if="{{tests}}" restamp strip-whitespace>
                 <bloombox-testing
                   id="productTesting"
                   zerostate
