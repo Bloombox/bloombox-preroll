@@ -37,7 +37,7 @@
 
 
 <dom-module id="bloombox-preroll">
-  <template>
+  <template strip-whitespace>
     <style is="custom-style" include="bloombox-styles">
       :root {
         --paper-icon-button-ink-color: green;
@@ -70,11 +70,11 @@
       }
     </style>
 
-    <template is="dom-if" if="[[!zerostate]]">
-      <paper-card heading="[[_renderBrand()]][[name]]" class="product-card preroll-product data-content fullwidth">
+    <template is="dom-if" if="[[!zerostate]]" strip-whitespace>
+      <div class="product-card preroll-card">
         <div class="card-content">
           <div class="name-row">
-            <h2>[[name]]</h2> 
+            <h2>[[brand]]: [[name]]</h2>
 
           <!-- Stock Flags -->
           <div class="stock-flags preroll-info test-info row">
@@ -126,7 +126,7 @@
               available="[[pricing.unit.available]]"
               currency="$"></bloombox-price>
           </div><!-- end div.row.pricelist -->
-          <template is="dom-if" if="[[!visible]]">
+          <template is="dom-if" if="[[!visible]]" strip-whitespace>
             <div class="not-in-stock-overlay not-in-stock"></div><!-- end div.not-in-stock-overlay -->
           </template>
         </div><!-- end div.card-content -->
@@ -149,9 +149,9 @@
     <!-- - - - - - - - - - - -->
     <!-- Zero-State  Content -->
     <!-- - - - - - - - - - - -->
-    <template is="dom-if" if="[[zerostate]]">
-      <paper-card heading="Pre-Roll" class="product-card preroll-product zerostate fullwidth">
-        <div class="card-content">
+    <template is="dom-if" if="[[zerostate]]" restamp strip-whitespace>
+      <div class="product-card preroll-card zerostate">
+        <div class="basic-info row">
           <div class="basic-info row">
             <!-- Name & Description -->
             <paper-input id="brandField" placeholder="Brand Name" value="{{brand}}" required no-label-float name="brand" class="form-item preroll-brand"></paper-input>
@@ -190,7 +190,7 @@
               <div class="sale-toggle-container">
                 <paper-checkbox id="saleToggle" checked="[[_isOnSale()]]" on-tap="_toggleSale" class="form-item sale-toggle" noink>On Sale</paper-checkbox>
               </div><!-- end .sale-toggle-container -->
-              <template is="dom-if" if="{{sale}}">
+              <template is="dom-if" if="{{sale}}" restamp strip-whitespace>
                 <div class="sale-amount-container">
                   <paper-slider id="saleValue" pin value="{{sale}}" max="95" min="5" editable step="5" class="form-item"></paper-slider>
                 </div><!-- end .sale-amount-container -->
@@ -248,7 +248,7 @@
         <!-- Actions -->
         <template is="dom-if" if="[[editing]]">
           <div class="zerostate-actions preroll-zerostate-actions card-actions row">
-        <paper-icon-button
+            <paper-icon-button
               id="saveButton"
               icon="save"
               on-tap="commitEdits"></paper-icon-button>
@@ -261,7 +261,7 @@
             <paper-tooltip for="cancelButton" position="left">Cancel Edits</paper-tooltip>
           </div><!-- end .preroll-zerostate-actions.card-actions -->
         </template>
-      </div><!-- end paper-card.product-card.zerostate.preroll-product -->
+      </div><!-- end div.product-card.zerostate.preroll-product -->
     </template>
   </template>
 
