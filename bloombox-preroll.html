@@ -158,10 +158,10 @@
         <div class="basic-info row">
           <div class="basic-info row">
             <!-- Name & Description -->
-            <paper-input id="brandField" placeholder="Brand Name" value="{{brand}}" required no-label-float name="brand" class="form-item preroll-brand"></paper-input>
-            <paper-input id="nameField" placeholder="Product Name" value="{{name}}" required no-label-float name="name" class="form-item preroll-name"></paper-input>
+            <paper-input id="brandField" placeholder="Brand Name" autofocus value="[[brand]]" required auto-validate error-message="Please provide a brand!" no-label-float name="brand" class="form-item preroll-brand"></paper-input>
+            <paper-input id="nameField" value="[[name]]" required auto-validate error-message="Please provide a name!" label="Name" name="name" class="form-item preroll-name"></paper-input>
             <paper-textarea id="descriptionField" label="Description" value="{{description}}" no-label-float name="description" class="form-item preroll-description"></paper-textarea>
-            <paper-dropdown-menu id="speciesField" label="Species" class="form-item" noink no-label-float required name="species">
+            <paper-dropdown-menu id="speciesField" label="Species" class="form-item" noink no-label-float required auto-validate name="species">
               <paper-listbox class="dropdown-content" selected="{{species}}" attr-for-selected="key">
                 <paper-item key="Indica">Indica</paper-item>
                 <paper-item key="Hybrid (Indica Dominant)">Hybrid (Indica Dominant)</paper-item>
@@ -170,7 +170,7 @@
                 <paper-item key="Unspecified">Unspecified</paper-item>
               </paper-listbox>
             </paper-dropdown-menu><!-- end paper-dropdown-menu#speciesField -->
-            <paper-dropdown-menu id="growField" label="Grow" class="form-item" noink no-label-float required name="grow">
+            <paper-dropdown-menu id="growField" label="Grow" class="form-item" noink no-label-float required auto-validate name="grow">
               <paper-listbox class="dropdown-content" selected="{{grow}}" attr-for-selected="key">
                 <paper-item key="Indoor">Indoor</paper-item>
                 <paper-item key="Outdoor">Outdoor</paper-item>
