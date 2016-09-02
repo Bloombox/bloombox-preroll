@@ -340,7 +340,8 @@
         if (this.get("tests") !== undefined && this.get("tests") != null) {
           payload.tests = {
             thc: this.get("tests").thc,
-            cbd: this.get("tests").cbd
+            cbd: this.get("tests").cbd,
+            mode: this.get("tests").mode || '%'
           };
         }
 
@@ -393,7 +394,8 @@
           testing = this.$$("#productTesting");
           payload.tests = {
             thc: testing.thc,
-            cbd: testing.cbd
+            cbd: testing.cbd,
+            mode: testing.ratingMode || '%'
           };
         }
 
