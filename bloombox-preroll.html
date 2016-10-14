@@ -389,6 +389,8 @@
 
         if (this.get("photos") && this.get("photos").length > 0)
           payload.photos = this.get("photos");
+        else
+          payload.photos = [];
 
         // handle test results
         if (this.$$("#testsToggle").checked) {
